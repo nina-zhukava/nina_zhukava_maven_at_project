@@ -11,20 +11,18 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
-import java.text.Format;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
 
 public class BookingParisTest {
-    //add constant strings for date
+
     private static WebDriver driver = new ChromeDriver();
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMMM yyyy");
+    private static DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMMM yyyy");
 
     @Before
     public void setUp() {
@@ -90,13 +88,11 @@ public class BookingParisTest {
         WebElement result = driver.findElement(By.xpath("//*[@data-testid='property-card'][1]//span[@data-testid='price-and-discounted-price']"));
         int price = Integer.parseInt(Arrays.stream(result.getText().split(" ")).findFirst().get().replace(",","")) / 7;
         assertTrue("Price is less than minimal", price >= minPrice);
-        driver.close();
-        driver.quit();
     }
 
     @After
     public void postCondition() {
-//        driver.close();
-//        driver.quit();
+        driver.close();
+        driver.quit();
     }
 }
