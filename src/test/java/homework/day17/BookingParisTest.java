@@ -33,7 +33,7 @@ public class BookingParisTest {
     }
 
     @Test
-    public void BookingParisTest() {
+    public void bookingParisTest() {
 
         driver.get("http://booking.com");
         driver.findElement(By.id("onetrust-accept-btn-handler")).click();
