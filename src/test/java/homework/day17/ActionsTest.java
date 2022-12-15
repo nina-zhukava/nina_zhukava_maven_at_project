@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
-public class W3schoolsTest {
+public class ActionsTest {
+
     WebDriver driver = new ChromeDriver();
 
     @Before
@@ -28,7 +29,7 @@ public class W3schoolsTest {
     }
 
     @Test
-    public void w3schoolsTest() {
+    public void actionsTest() {
         driver.get("https://www.w3schools.com/java/");
         driver.findElement(By.id("accept-choices")).click();
         Actions action = new Actions(driver);
