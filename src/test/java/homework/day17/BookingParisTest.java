@@ -1,13 +1,9 @@
 package homework.day17;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
@@ -19,22 +15,12 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
 
-public class BookingParisTest {
+public class BookingParisTest extends BaseTest{
 
-    private static WebDriver driver = new ChromeDriver();
-    private static DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMMM yyyy");
-
-    @Before
-    public void setUp() {
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-    }
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("d MMMM yyyy");
 
     @Test
     public void bookingParisTest() {
-
         driver.get("http://booking.com");
         driver.findElement(By.id("onetrust-accept-btn-handler")).click();
 
@@ -44,8 +30,8 @@ public class BookingParisTest {
         driver.findElement(By.xpath("//*[@data-testid='autocomplete-results' or @aria-label='List of suggested destinations' or @role='listbox']/li[1]")).click();
 
         LocalDate date = LocalDate.now().plusDays(3);
-        String startDateXPath = "//span[@aria-label='" + date.format(format) + "']";
-        String endDateXPath = "//span[@aria-label='" + date.plusDays(10).format(format) + "']";
+        String startDateXPath = "//span[@aria-label='" + date.format(FORMAT) + "']";
+        String endDateXPath = "//span[@aria-label='" + date.plusDays(10).format(FORMAT) + "']";
         driver.findElement(By.xpath(startDateXPath)).click();
         driver.findElement(By.xpath(endDateXPath)).click();
         WebElement peopleAndRoomQuantity = driver.findElement(By.xpath("//form[@method='GET']//div[3]//button[@type='button' or  @role='button']"));
@@ -88,11 +74,5 @@ public class BookingParisTest {
         WebElement result = driver.findElement(By.xpath("//*[@data-testid='property-card'][1]//span[@data-testid='price-and-discounted-price']"));
         int price = Integer.parseInt(Arrays.stream(result.getText().split(" ")).findFirst().get().replace(",","")) / 7;
         assertTrue("Price is less than minimal", price >= minPrice);
-    }
-
-    @After
-    public void postCondition() {
-        driver.close();
-        driver.quit();
     }
 }

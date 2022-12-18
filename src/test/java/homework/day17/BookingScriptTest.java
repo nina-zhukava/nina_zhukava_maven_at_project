@@ -1,29 +1,13 @@
 package homework.day17;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-public class BookingScriptTest {
-    private static WebDriver driver = new ChromeDriver();
-
-    @Before
-    public void setUp() {
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-    }
+public class BookingScriptTest extends BaseTest {
 
     @Test
     public void bookingScriptTest() {
@@ -44,11 +28,5 @@ public class BookingScriptTest {
         ((JavascriptExecutor) driver).executeScript("arguments[0].style.color = 'red'", title);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click()", element);
         assertEquals("color: red;", title.getAttribute("style"));
-    }
-
-    @After
-    public void postCondition() {
-        driver.close();
-        driver.quit();
     }
 }
