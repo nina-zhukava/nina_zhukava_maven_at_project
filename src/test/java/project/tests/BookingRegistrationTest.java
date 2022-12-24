@@ -28,17 +28,5 @@ public class BookingRegistrationTest extends BaseTest {
         bookingMainPage.closeWelcomeMessage();
 
         mailruMainPage.openMailruMainPage();
-
-
     }
 }
-/*открыть трэшмейл
-* создать фейковую почту на тестовый имейл
-* прихранить имя фейк почты
-* открыть букинг
-* зарегистрироваться там
-* открыть тестовую почту
-* найти письмо от букинга
-* нажать подтверждение
-* перейти в настройки аккаунта
-* проверить что нет уведомления*/
