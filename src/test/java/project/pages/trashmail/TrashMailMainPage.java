@@ -1,9 +1,15 @@
 package project.pages.trashmail;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import project.driver.Driver;
 import project.objects.Credentials;
+
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class TrashMailMainPage {
 
@@ -21,9 +27,15 @@ public class TrashMailMainPage {
     }
 
     public void chooseNumberOfForwards(int number) {
-//        driver.findElement(By.xpath("//*[@id='fe-fwd-nb']/option["+ number +"]")).click();
-        driver.findElement(By.xpath("//*[@id='fe-mob-fwd-nb']")).click();
-        driver.findElement(By.xpath("//*[@id='fe-mob-fwd-nb']/option[2]")).click();
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofMillis(5))
+                .ignoring(NoSuchElementException.class)
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='fe-fwd-nb']")));
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.findElement(By.xpath("//*[@id='fe-fwd-nb']")).click();
+        driver.findElement(By.xpath("//*[@id='fe-fwd-nb']/option[" + number + "]")).click();
     }
 
     public void chooseOneDayLifeSpan() {
