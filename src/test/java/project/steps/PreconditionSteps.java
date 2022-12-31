@@ -13,7 +13,7 @@ public class PreconditionSteps {
     private static WebDriver driver = Driver.getDriver();
     private static TrashMailMainPage trashMail = new TrashMailMainPage();
 
-    public static String createNewTrashMailAddress() {
+    public static String createAndGetNewTrashMailAddress() {
         trashMail.openTrashMailMainPage();
         trashMail.enterRealAddress();
         trashMail.chooseNumberOfForwards(2);

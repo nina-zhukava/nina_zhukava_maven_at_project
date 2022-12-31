@@ -1,7 +1,6 @@
 package project.tests;
 
 import org.junit.Test;
-import project.objects.Credentials;
 import project.pages.booking.BookingMainPage;
 import project.pages.booking.BookingRegistrationPage;
 import project.pages.mailru.MailruMainPage;
@@ -16,7 +15,7 @@ public class BookingRegistrationTest extends BaseTest {
 
     @Test
     public void bookingRegistrationTest() {
-        var disposableAddress = PreconditionSteps.createNewTrashMailAddress();
+        var disposableAddress = PreconditionSteps.createAndGetNewTrashMailAddress();
         bookingMainPage.openBookingMainPage();
         bookingMainPage.acceptCookies();
         bookingMainPage.clickRegisterButton();
@@ -25,8 +24,21 @@ public class BookingRegistrationTest extends BaseTest {
         bookingRegistrationPage.enterAndConfirmPassword(PasswordGenerator.generatePasswordForBooking());
         bookingRegistrationPage.submitButton();
 
-        bookingMainPage.closeWelcomeMessage();
+//        bookingMainPage.closeWelcomeMessage();
 
         mailruMainPage.openMailruMainPage();
+        mailruMainPage.clickLoginButton();
+        mailruMainPage.loginWithDefaultCredentials();
     }
 }
+
+/*открыть трэшмейл
+ * создать фейковую почту на тестовый имейл
+ * прихранить имя фейк почты
+ * открыть букинг
+ * зарегистрироваться там
+ * открыть тестовую почту
+ * найти письмо от букинга
+ * нажать подтверждение
+ * перейти в настройки аккаунта
+ * проверить что нет уведомления*/
