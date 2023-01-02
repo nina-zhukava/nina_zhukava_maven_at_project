@@ -1,5 +1,6 @@
 package homework.day21;
 
+import gherkin.deps.com.google.gson.Gson;
 import gherkin.deps.com.google.gson.stream.JsonReader;
 import homework.day21.steps.GetUsers;
 import org.junit.Assert;
@@ -8,42 +9,47 @@ import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-public class ServiceTests extends BaseTest {
+public class ServiceTests {
+
+    private static final String FULL_SHORT_NAME_USER = "src/test/resources/users/ShortUsername.json";
 
     private static final String ALL_USERS = "src/test/resources/users/AllUsers.json";
-    private static final String FULL_NAME_USER = "src/test/resources/users/Berta.json";
+    private static final String LONG_NAME_USER = "src/test/resources/users/LongUserName.json";
+    private static final String PARTIAL_SHOR_NAME_USER = "src/test/resources/users/PartialShortUsername.json";
+    private Gson gson = new Gson();
 
     @Test
-    public void getAllUsersTest() throws FileNotFoundException {
-        GetUsersResponse actualResponse = gson.fromJson(GetUsers.getAllUsers(requestSpec), GetUsersResponse.class);
-        GetUsersResponse expectedResponse = gson.fromJson(new JsonReader(new FileReader(ALL_USERS)),
-                GetUsersResponse.class);
-        Assert.assertEquals(actualResponse, expectedResponse);
+    public void getAllUsersTest() {
+        searchTest(GetUsers.getAllUsers(), ALL_USERS);
     }
 
     @Test
-    public void searchUserByFullUsername() throws FileNotFoundException {
-        GetUsersResponse actualResponse = gson.fromJson(GetUsers.getUserByFullUsername(requestSpec), GetUsersResponse.class);
-        GetUsersResponse expectedResponse = gson.fromJson(new JsonReader(new FileReader(FULL_NAME_USER)),
-                GetUsersResponse.class);
-        Assert.assertEquals(actualResponse, expectedResponse);
+    public void searchUserByFullShortUsername() {
+        searchTest(GetUsers.getUserByFullShortUsername(), FULL_SHORT_NAME_USER);
     }
 
     @Test
-    public void searchUserByFullRealname() throws FileNotFoundException {
-        GetUsersResponse actualResponse = gson.fromJson(GetUsers.getUserByPartUsername(requestSpec), GetUsersResponse.class);
-        GetUsersResponse expectedResponse = gson.fromJson(new JsonReader(new FileReader(FULL_NAME_USER)),
-                GetUsersResponse.class);
-        Assert.assertEquals(actualResponse, expectedResponse);
+    public void searchUserByFullLongUsername() {
+        searchTest(GetUsers.getUserByFullLongUsername(), LONG_NAME_USER);
+    }
+
+    @Test
+    public void searchUserByPartialShortUsername() {
+        searchTest(GetUsers.getUserByPartialShortUsername(), PARTIAL_SHOR_NAME_USER);
+    }
+
+    @Test
+    public void searchUserByPartialLongUsername() {
+        searchTest(GetUsers.getUserByPartialLongUsername(), LONG_NAME_USER);
+    }
+
+    private void searchTest(GetUsersResponse actualResponse, String file) {
+        try {
+            GetUsersResponse expectedResponse = gson.fromJson(new JsonReader(new FileReader(file)),
+                    GetUsersResponse.class);
+            Assert.assertEquals(actualResponse, expectedResponse);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
-/*
-- WS address: http://178.124.206.46:8001/app/ws/
-- create automation tests to verify possibility to
-search user by full name (short and long),
-by partial name (short and long),
-search all users - 5 tests in total
-
-- test data should be stored in json files
-- data should be parsed with gson libraries
-- store test data, test objects, steps separately*/
