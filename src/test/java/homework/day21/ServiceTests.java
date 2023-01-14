@@ -12,10 +12,10 @@ import java.io.FileReader;
 public class ServiceTests {
 
     private static final String FULL_SHORT_NAME_USER = "src/test/resources/users/ShortUsername.json";
-
     private static final String ALL_USERS = "src/test/resources/users/AllUsers.json";
     private static final String LONG_NAME_USER = "src/test/resources/users/LongUserName.json";
     private static final String PARTIAL_SHOR_NAME_USER = "src/test/resources/users/PartialShortUsername.json";
+
     private Gson gson = new Gson();
 
     @Test
